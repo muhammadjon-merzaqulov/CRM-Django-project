@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Convert Lead to Deal - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Convert Lead to Deal</h1>
+        <a href="{% url 'lead_detail' lead.id %}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Lead
+        </a>
+    </div>
+    
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-gray-800 mb-2">Lead Information</h2>
+                <div class="bg-gray-50 p-4 rounded-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Title</p>
+                            <p class="font-medium">{{ lead.title }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Contact</p>
+                            <p class="font-medium">{{ lead.contact.first_name }} {{ lead.contact.last_name }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Status</p>
+                            <p class="font-medium">{{ lead.get_status_display }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Estimated Value</p>
+                            <p class="font-medium">{% if lead.estimated_value %}${{ lead.estimated_value }}{% else %}Not specified{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="text-lg font-medium text-gray-800 mb-4">Deal Information</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form.title|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.stage|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.amount|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.expected_close_date|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.probability|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.assigned_to|as_crispy_field }}
+                    </div>
+                    <div class="md:col-span-2">
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md">
+                        Convert to Deal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

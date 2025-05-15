@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6">Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100 text-blue-500">
+                    <i class="fas fa-user-tag text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-gray-500 text-sm">Total Leads</p>
+                    <p class="text-2xl font-semibold text-gray-800">{{ total_leads }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-green-100 text-green-500">
+                    <i class="fas fa-handshake text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-gray-500 text-sm">Total Deals</p>
+                    <p class="text-2xl font-semibold text-gray-800">{{ total_deals }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-purple-100 text-purple-500">
+                    <i class="fas fa-address-book text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-gray-500 text-sm">Total Contacts</p>
+                    <p class="text-2xl font-semibold text-gray-800">{{ total_contacts }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-yellow-100 text-yellow-500">
+                    <i class="fas fa-dollar-sign text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-gray-500 text-sm">Deal Forecast</p>
+                    <p class="text-2xl font-semibold text-gray-800">${{ deal_forecast|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Deals by Stage</h2>
+            <canvas id="dealsByStageChart" height="200"></canvas>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Leads by Status</h2>
+            <canvas id="leadsByStatusChart" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Deal Forecast -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Deal Forecast by Month</h2>
+        <canvas id="dealForecastChart" height="100"></canvas>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Leads</h2>
+            {% if recent_leads %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for lead in recent_leads %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <a href="{% url 'lead_detail' lead.id %}" class="text-blue-600 hover:underline">
+                                            {{ lead.title }}
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                            {% if lead.status == 'new' %}bg-blue-100 text-blue-800
+                                            {% elif lead.status == 'contacted' %}bg-yellow-100 text-yellow-800
+                                            {% elif lead.status == 'qualified' %}bg-green-100 text-green-800
+                                            {% elif lead.status == 'unqualified' %}bg-red-100 text-red-800
+                                            {% elif lead.status == 'converted' %}bg-purple-100 text-purple-800
+                                            {% endif %}">
+                                            {{ lead.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.created_at|date:"M d, Y" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-gray-500">No recent leads found.</p>
+            {% endif %}
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Deals</h2>
+            {% if recent_deals %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stage</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for deal in recent_deals %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <a href="{% url 'deal_detail' deal.id %}" class="text-blue-600 hover:underline">
+                                            {{ deal.title }}
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                            {% if deal.stage == 'discovery' %}bg-blue-100 text-blue-800
+                                            {% elif deal.stage == 'proposal' %}bg-yellow-100 text-yellow-800
+                                            {% elif deal.stage == 'negotiation' %}bg-purple-100 text-purple-800
+                                            {% elif deal.stage == 'closed_won' %}bg-green-100 text-green-800
+                                            {% elif deal.stage == 'closed_lost' %}bg-red-100 text-red-800
+                                            {% endif %}">
+                                            {{ deal.get_stage_display }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${{ deal.amount }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-gray-500">No recent deals found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Tasks -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">Upcoming Tasks</h2>
+                <a href="{% url 'task_list' %}" class="text-blue-600 hover:underline text-sm">View All</a>
+            </div>
+            {% if upcoming_tasks %}
+                <div class="space-y-4">
+                    {% for task in upcoming_tasks %}
+                        <div class="flex items-start p-3 border rounded-lg
+                            {% if task.priority == 'high' %}border-red-200 bg-red-50
+                            {% elif task.priority == 'medium' %}border-yellow-200 bg-yellow-50
+                            {% else %}border-blue-200 bg-blue-50
+                            {% endif %}">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fas fa-tasks
+                                    {% if task.priority == 'high' %}text-red-500
+                                    {% elif task.priority == 'medium' %}text-yellow-500
+                                    {% else %}text-blue-500
+                                    {% endif %}"></i>
+                            </div>
+                            <div class="ml-3 flex-1">
+                                <p class="text-sm font-medium text-gray-900">
+                                    <a href="{% url 'task_detail' task.id %}" class="hover:underline">{{ task.title }}</a>
+                                </p>
+                                <p class="text-sm text-gray-500">Due: {{ task.due_date|date:"M d, Y H:i" }}</p>
+                                <p class="text-sm text-gray-500">Assigned to: {{ task.assigned_to.get_full_name|default:task.assigned_to.username }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-500">No upcoming tasks found.</p>
+            {% endif %}
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-red-600">Overdue Tasks</h2>
+                <a href="{% url 'task_list' %}" class="text-blue-600 hover:underline text-sm">View All</a>
+            </div>
+            {% if overdue_tasks %}
+                <div class="space-y-4">
+                    {% for task in overdue_tasks %}
+                        <div class="flex items-start p-3 border rounded-lg border-red-200 bg-red-50">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
+                            </div>
+                            <div class="ml-3 flex-1">
+                                <p class="text-sm font-medium text-gray-900">
+                                    <a href="{% url 'task_detail' task.id %}" class="hover:underline">{{ task.title }}</a>
+                                </p>
+                                <p class="text-sm text-red-500 font-medium">Due: {{ task.due_date|date:"M d, Y H:i" }}</p>
+                                <p class="text-sm text-gray-500">Assigned to: {{ task.assigned_to.get_full_name|default:task.assigned_to.username }}</p>
+                            </div>
+                            <div class="ml-2">
+                                <form method="post" action="{% url 'task_complete' task.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button type="submit" class="text-green-600 hover:text-green-900" title="Mark as Completed">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-500">No overdue tasks found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Deals by Stage Chart
+    const dealsByStageCtx = document.getElementById('dealsByStageChart').getContext('2d');
+    const dealsByStageChart = new Chart(dealsByStageCtx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Discovery',
+                'Proposal',
+                'Negotiation',
+                'Closed Won',
+                'Closed Lost'
+            ],
+            datasets: [{
+                data: [
+                    {{ deals_by_stage.discovery|default:0 }},
+                    {{ deals_by_stage.proposal|default:0 }},
+                    {{ deals_by_stage.negotiation|default:0 }},
+                    {{ deals_by_stage.closed_won|default:0 }},
+                    {{ deals_by_stage.closed_lost|default:0 }}
+                ],
+                backgroundColor: [
+                    '#3B82F6', // blue
+                    '#F59E0B', // yellow
+                    '#8B5CF6', // purple
+                    '#10B981', // green
+                    '#EF4444'  // red
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+
+    // Leads by Status Chart
+    const leadsByStatusCtx = document.getElementById('leadsByStatusChart').getContext('2d');
+    const leadsByStatusChart = new Chart(leadsByStatusCtx, {
+        type: 'bar',
+        data: {
+            labels: [
+                'New',
+                'Contacted',
+                'Qualified',
+                'Unqualified',
+                'Converted'
+            ],
+            datasets: [{
+                label: 'Number of Leads',
+                data: [
+                    {{ leads_by_status.new|default:0 }},
+                    {{ leads_by_status.contacted|default:0 }},
+                    {{ leads_by_status.qualified|default:0 }},
+                    {{ leads_by_status.unqualified|default:0 }},
+                    {{ leads_by_status.converted|default:0 }}
+                ],
+                backgroundColor: '#3B82F6',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+    // Deal Forecast Chart
+    const dealForecastCtx = document.getElementById('dealForecastChart').getContext('2d');
+    const dealForecastChart = new Chart(dealForecastCtx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for item in deals_by_month %}
+                    '{{ item.month }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'Deal Value',
+                data: [
+                    {% for item in deals_by_month %}
+                        {{ item.value }},
+                    {% endfor %}
+                ],
+                backgroundColor: '#3B82F6',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value;
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return '$' + context.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

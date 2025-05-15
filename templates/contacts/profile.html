@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Profile - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto max-w-4xl py-8">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h1 class="text-2xl font-semibold text-gray-800">Your Profile</h1>
+        </div>
+        
+        <div class="p-6">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h2 class="text-lg font-medium text-gray-800 mb-4">Account Information</h2>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">Username</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">First Name</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.first_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.last_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h2 class="text-lg font-medium text-gray-800 mb-4">Profile Information</h2>
+                        
+                        {% if profile_form.profile_picture %}
+                        <div class="mb-4">
+                            <label for="{{ profile_form.profile_picture.id_for_label }}" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+                            {% if user.user_profile.profile_picture %}
+                                <div class="mt-2 mb-2">
+                                    <img src="{{ user.user_profile.profile_picture.url }}" alt="{{ user.username }}" class="h-24 w-24 rounded-full object-cover">
+                                </div>
+                            {% endif %}
+                            {{ profile_form.profile_picture }}
+                            {% if profile_form.profile_picture.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ profile_form.profile_picture.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        {% if profile_form.phone_number %}
+                        <div class="mb-4">
+                            <label for="{{ profile_form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700">Phone</label>
+                            {{ profile_form.phone_number }}
+                            {% if profile_form.phone_number.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ profile_form.phone_number.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        {% if profile_form.position %}
+                        <div class="mb-4">
+                            <label for="{{ profile_form.position.id_for_label }}" class="block text-sm font-medium text-gray-700">Position</label>
+                            {{ profile_form.position }}
+                            {% if profile_form.position.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ profile_form.position.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        {% if profile_form.department %}
+                        <div class="mb-4">
+                            <label for="{{ profile_form.department.id_for_label }}" class="block text-sm font-medium text-gray-700">Department</label>
+                            {{ profile_form.department }}
+                            {% if profile_form.department.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ profile_form.department.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex items-center justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800">Change Password</h2>
+        </div>
+        
+        <div class="p-6">
+            <p class="mb-4 text-gray-600">To change your password, please <a href="{% url 'password_change' %}" class="text-blue-600 hover:text-blue-800">click here</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

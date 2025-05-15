@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task.title }} - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Task Details</h1>
+        <div class="flex space-x-2">
+            {% if task.status != 'completed' %}
+                <form method="post" action="{% url 'task_complete' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md">
+                        <i class="fas fa-check mr-2"></i> Mark as Completed
+                    </button>
+                </form>
+            {% endif %}
+            <a href="{% url 'task_update' task.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-edit mr-2"></i> Edit
+            </a>
+            <a href="{% url 'task_delete' task.id %}" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-trash mr-2"></i> Delete
+            </a>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Task Info Card -->
+        <div class="md:col-span-1">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ task.title }}</h2>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                {% if task.status == 'not_started' %}bg-gray-100 text-gray-800
+                                {% elif task.status == 'in_progress' %}bg-blue-100 text-blue-800
+                                {% elif task.status == 'completed' %}bg-green-100 text-green-800
+                                {% elif task.status == 'deferred' %}bg-yellow-100 text-yellow-800
+                                {% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Priority:</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                {% if task.priority == 'high' %}bg-red-100 text-red-800
+                                {% elif task.priority == 'medium' %}bg-yellow-100 text-yellow-800
+                                {% elif task.priority == 'low' %}bg-green-100 text-green-800
+                                {% endif %}">
+                                {{ task.get_priority_display }}
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Due Date:</span>
+                            <span class="font-medium {% if task.due_date < now and task.status != 'completed' %}text-red-600{% else %}text-gray-800{% endif %}">
+                                {{ task.due_date|date:"M d, Y H:i" }}
+                            </span>
+                        </div>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Assigned To:</span>
+                            <span class="font-medium">{{ task.assigned_to.get_full_name|default:task.assigned_to.username }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Created By:</span>
+                            <span class="font-medium">{{ task.created_by.get_full_name|default:task.created_by.username }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Created At:</span>
+                            <span class="font-medium">{{ task.created_at|date:"M d, Y" }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Last Updated:</span>
+                            <span class="font-medium">{{ task.updated_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    
+                    {% if task.contact or task.lead or task.deal %}
+                        <div class="border-t pt-4 mt-4">
+                            <h3 class="text-lg font-medium text-gray-800 mb-2">Related To</h3>
+                            
+                            {% if task.contact %}
+                                <div class="flex items-center mb-2">
+                                    <div class="w-10 text-gray-500">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-500">Contact</p>
+                                        <a href="{% url 'contact_detail' task.contact.id %}" class="text-blue-600 hover:underline">
+                                            {{ task.contact.first_name }} {{ task.contact.last_name }}
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if task.lead %}
+                                <div class="flex items-center mb-2">
+                                    <div class="w-10 text-gray-500">
+                                        <i class="fas fa-user-tag"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-500">Lead</p>
+                                        <a href="{% url 'lead_detail' task.lead.id %}" class="text-blue-600 hover:underline">
+                                            {{ task.lead.title }}
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if task.deal %}
+                                <div class="flex items-center">
+                                    <div class="w-10 text-gray-500">
+                                        <i class="fas fa-handshake"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-500">Deal</p>
+                                        <a href="{% url 'deal_detail' task.deal.id %}" class="text-blue-600 hover:underline">
+                                            {{ task.deal.title }}
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Description Section -->
+        <div class="md:col-span-2">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Task Description</h3>
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        {% if task.description %}
+                            <p class="text-gray-700 whitespace-pre-line">{{ task.description }}</p>
+                        {% else %}
+                            <p class="text-gray-500 italic">No description provided.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
