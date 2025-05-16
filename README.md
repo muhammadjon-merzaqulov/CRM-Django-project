@@ -37,29 +37,54 @@ docker-compose.yml   - Docker orchestration configuration
 requirements.txt     - Python project dependencies
 README.md            - Project documentation
   </pre>
-  <hr>
+<hr>
 
-  <h2>⚙️ Installation (Development)</h2>
+<h2>⚙️ Installation (Development)</h2>
 
-  <h3>1. Clone the Repository</h3>
-  <pre><code>git clone https://github.com/your-username/CRM-Django-project.git
+<h3>🖥 For macOS / Linux</h3>
+
+<h4>1. Clone the Repository</h4>
+<pre><code>git clone https://github.com/your-username/CRM-Django-project.git
 cd CRM-Django-project</code></pre>
 
-  <h3>2. Create and Activate Virtual Environment (optional)</h3>
-  <pre><code>python3 -m venv .venv
+<h4>2. Create and Activate Virtual Environment (recommended)</h4>
+<pre><code>python3 -m venv .venv
 source .venv/bin/activate</code></pre>
 
-  <h3>3. Install Dependencies</h3>
-  <pre><code>pip install -r requirements.txt</code></pre>
+<h4>3. Install Dependencies</h4>
+<pre><code>pip install -r requirements.txt</code></pre>
 
-  <h3>4. Run Migrations and Create Superuser</h3>
-  <pre><code>python manage.py migrate
+<h4>4. Apply Migrations & Create Superuser</h4>
+<pre><code>python manage.py migrate
 python manage.py createsuperuser</code></pre>
 
-  <h3>5. Run the Development Server</h3>
-  <pre><code>python manage.py runserver</code></pre>
+<h4>5. Run the Development Server</h4>
+<pre><code>python manage.py runserver</code></pre>
 
-  <hr>
+<hr>
+
+<h3>🪟 For Windows (Microsoft)</h3>
+
+<h4>1. Clone the Repository</h4>
+<pre><code>git clone https://github.com/your-username/CRM-Django-project.git
+cd CRM-Django-project</code></pre>
+
+<h4>2. Create and Activate Virtual Environment (recommended)</h4>
+<pre><code>python -m venv .venv
+.venv\Scripts\activate</code></pre>
+
+<h4>3. Install Dependencies</h4>
+<pre><code>pip install -r requirements.txt</code></pre>
+
+<h4>4. Apply Migrations & Create Superuser</h4>
+<pre><code>python manage.py migrate
+python manage.py createsuperuser</code></pre>
+
+<h4>5. Run the Development Server</h4>
+<pre><code>python manage.py runserver</code></pre>
+
+<hr>
+
 
   <h2>🐳 Docker Setup (Production Ready)</h2>
 
