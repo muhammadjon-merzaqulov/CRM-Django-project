@@ -44,7 +44,7 @@ README.md            - Project documentation
 <h3>🖥 For macOS / Linux</h3>
 
 <h4>1. Clone the Repository</h4>
-<pre><code>git clone https://github.com/your-username/CRM-Django-project.git
+<pre><code>git clone [https://github.com/your-username/CRM-Django-project.git](https://github.com/muhammadjon-merzaqulov/CRM-Django-project.git)
 cd CRM-Django-project</code></pre>
 
 <h4>2. Create and Activate Virtual Environment (recommended)</h4>
@@ -66,7 +66,7 @@ python manage.py createsuperuser</code></pre>
 <h3>🪟 For Windows (Microsoft)</h3>
 
 <h4>1. Clone the Repository</h4>
-<pre><code>git clone https://github.com/your-username/CRM-Django-project.git
+<pre><code>git clone https://github.com/muhammadjon-merzaqulov/CRM-Django-project.git
 cd CRM-Django-project</code></pre>
 
 <h4>2. Create and Activate Virtual Environment (recommended)</h4>
