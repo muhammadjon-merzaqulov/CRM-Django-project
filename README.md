@@ -1,111 +1,132 @@
-# 🧠 CRM Django Project
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRM Django Project</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;">
 
-A fully-featured CRM (Customer Relationship Management) system built with Django, Docker, and PostgreSQL. This project helps manage contacts, leads, deals, tasks, and user accounts through an intuitive dashboard.
+  <h1>🧠 CRM Django Project</h1>
 
-## 🚀 Live Demo
+  <p>A fully-featured <strong>Customer Relationship Management (CRM)</strong> system built with <strong>Django</strong>, <strong>PostgreSQL</strong>, and <strong>Docker</strong>. This application helps businesses manage their <strong>contacts, leads, deals, tasks</strong>, and <strong>user accounts</strong> through an intuitive and responsive dashboard.</p>
 
-Deployed on AWS EC2 with Docker & GitHub Actions CI/CD pipeline.
+  <hr>
 
-🔗 http://43.204.150.89:8000/
+  <h2>🚀 Live Demo</h2>
+  <p>Deployed on <strong>AWS EC2</strong> using <strong>Docker</strong> and <strong>GitHub Actions CI/CD</strong> pipeline.</p>
+  <p><a href="http://43.204.150.89:8000/" target="_blank">🔗 http://43.204.150.89:8000/</a></p>
 
----
+  <hr>
 
-## 📦 Tech Stack
+  <h2>📦 Tech Stack</h2>
+  <ul>
+    <li><strong>Backend:</strong> Django 4.x</li>
+    <li><strong>Frontend:</strong> HTML5, TailwindCSS, JavaScript</li>
+    <li><strong>Database:</strong> PostgreSQL</li>
+    <li><strong>DevOps:</strong> Docker, Docker Compose, GitHub Actions</li>
+    <li><strong>Hosting:</strong> AWS EC2</li>
+  </ul>
 
-- **Backend**: Django 4.x
-- **Frontend**: HTML5, TailwindCSS, JavaScript
-- **Database**: PostgreSQL
-- **DevOps**: Docker, Docker Compose, GitHub Actions
-- **Hosting**: AWS EC2
+  <hr>
 
----
+  <h2>📁 Project Structure</h2>
+  <pre>
+accounts/            - User registration, login, and profile management
+contacts/            - Contact management (CRUD)
+deals/               - Deal pipeline management
+leads/               - Lead tracking functionality
+dashboard/           - User-specific analytics and insights
+tasks/               - Task assignment and tracking
+templates/           - HTML templates styled with TailwindCSS
+static/js/           - JavaScript scripts
+crm_project/         - Main Django settings and URL routing
+.github/workflows/   - GitHub Actions CI/CD configurations
+Dockerfile           - Docker build instructions
+docker-compose.yml   - Docker orchestration configuration
+requirements.txt     - Python project dependencies
+README.md            - Project documentation
+  </pre>
 
-## 📁 Project Structure
+  <hr>
 
-```text
-├── accounts/          → User registration, login, profile management
-├── contacts/          → Contact CRUD functionality
-├── deals/             → Deal pipeline management
-├── leads/             → Lead tracking module
-├── dashboard/         → User-specific dashboard & charts
-├── tasks/             → Task assignment and tracking
-├── templates/         → HTML templates with TailwindCSS
-├── static/js/         → JavaScript files
-├── crm_project/       → Main Django settings and URL routing
-├── .github/workflows/ → CI/CD configuration for GitHub Actions
-├── Dockerfile         → Docker image build file
-├── docker-compose.yml→ Multi-container orchestration
-├── requirements.txt   → Python dependencies
-└── README.md          → Project overview
-```
-# ⚙️ Installation (Development)
+  <h2>⚙️ Installation (Development)</h2>
 
-## 1. Clone the repository
-```
-git clone https://github.com/your-username/CRM-Django-project.git
-cd CRM-Django-project
-```
+  <h3>1. Clone the Repository</h3>
+  <pre><code>git clone https://github.com/your-username/CRM-Django-project.git
+cd CRM-Django-project</code></pre>
 
-## 2. Create and activate virtual environment (optional)
-```
-python3 -m venv .venv
-source .venv/bin/activate
-```
+  <h3>2. Create and Activate Virtual Environment (optional)</h3>
+  <pre><code>python3 -m venv .venv
+source .venv/bin/activate</code></pre>
 
-## 3. Install dependencies
-```
-pip install -r requirements.txt
-```
+  <h3>3. Install Dependencies</h3>
+  <pre><code>pip install -r requirements.txt</code></pre>
 
-## 4. Run migrations and create superuser
-```
-python manage.py migrate
-python manage.py createsuperuser
-```
+  <h3>4. Run Migrations and Create Superuser</h3>
+  <pre><code>python manage.py migrate
+python manage.py createsuperuser</code></pre>
 
-## 5. Run the development server
-```
-python manage.py runserver
-```
+  <h3>5. Run the Development Server</h3>
+  <pre><code>python manage.py runserver</code></pre>
 
-#🐳 Docker Setup (Production-Ready)
-## 1. Build and run the containers
-```
-docker-compose up --build
-```
+  <hr>
 
-## 2. Open in browser
-http://localhost:8000
+  <h2>🐳 Docker Setup (Production Ready)</h2>
 
-✅ Features
-🔐 Secure user authentication (registration, login, logout)
+  <h3>1. Build and Run the Containers</h3>
+  <pre><code>docker-compose up --build</code></pre>
 
-📇 Full CRUD for contacts, leads, deals, and tasks
+  <h3>2. Open in Browser</h3>
+  <p><a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
 
-📊 Dashboard with key insights and analytics
+  <hr>
 
-📨 Email notifications (coming soon)
+  <h2>✅ Features</h2>
+  <ul>
+    <li>🔐 Secure user authentication (register, login, logout)</li>
+    <li>📇 Full CRUD for contacts, leads, deals, and tasks</li>
+    <li>📊 Dashboard with visual insights and analytics</li>
+    <li>📨 Email notifications (coming soon)</li>
+    <li>🧪 Unit test coverage setup (coming soon)</li>
+    <li>🔁 CI/CD pipeline with GitHub Actions</li>
+  </ul>
 
-🧪 Test coverage setup (coming soon)
+  <hr>
 
-🌐 CI/CD pipeline with GitHub Actions
-
-🔧 Environment Variables
-Create a .env file and configure:
-
-DEBUG=True
+  <h2>🔧 Environment Variables</h2>
+  <p>Create a <code>.env</code> file in the root directory with the following content:</p>
+  <pre><code>DEBUG=True
 SECRET_KEY=your_secret_key
 POSTGRES_DB=crm_db
 POSTGRES_USER=crm_user
-POSTGRES_PASSWORD=crm_pass
+POSTGRES_PASSWORD=crm_pass</code></pre>
 
-🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+  <hr>
 
-📜 License
-This project is licensed under the MIT License.
+  <h2>🤝 Contributing</h2>
+  <p>Contributions are welcome! Follow these steps:</p>
+  <ol>
+    <li>Fork this repository</li>
+    <li>Create a new branch: <code>git checkout -b feature/YourFeature</code></li>
+    <li>Commit your changes: <code>git commit -m "Add your message here"</code></li>
+    <li>Push to the branch: <code>git push origin feature/YourFeature</code></li>
+    <li>Open a pull request</li>
+  </ol>
+  <p>For major changes, please open an issue to discuss them first.</p>
 
-📧 Contact
-Muhammadjon Merzaqulov
-📧 merzaqulov1@gmail.com
-🔗 [[LinkedIn/GitHub Profile]](https://www.linkedin.com/in/muhammadjon-merzaqulov/)
+  <hr>
+
+  <h2>📜 License</h2>
+  <p>This project is licensed under the <strong>MIT License</strong>.</p>
+
+  <hr>
+
+  <h2>📧 Contact</h2>
+  <p><strong>Muhammadjon Merzaqulov</strong></p>
+  <p>Email: <a href="mailto:merzaqulov1@gmail.com">merzaqulov1@gmail.com</a></p>
+  <p>LinkedIn: <a href="https://www.linkedin.com/in/muhammadjon-merzaqulov/" target="_blank">muhammadjon-merzaqulov</a></p>
+  <p>GitHub: <a href="https://github.com/muhammadjon-merzaqulov" target="_blank">github.com/muhammadjon-merzaqulov</a></p>
+
+</body>
+</html>
