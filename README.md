@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CRM Django Project</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;">
-
-  <h1>🧠 CRM Django Project</h1>
-
-  <p>A fully-featured <strong>Customer Relationship Management (CRM)</strong> system built with <strong>Django</strong>, <strong>PostgreSQL</strong>, and <strong>Docker</strong>. This application helps businesses manage their <strong>contacts, leads, deals, tasks</strong>, and <strong>user accounts</strong> through an intuitive and responsive dashboard.</p>
+<h1>🧠 CRM Django Project</h1>
+<p>A fully-featured <strong>Customer Relationship Management (CRM)</strong> system built with <strong>Django</strong>, <strong>PostgreSQL</strong>, and <strong>Docker</strong>. This application helps businesses manage their <strong>contacts, leads, deals, tasks</strong>, and <strong>user accounts</strong> through an intuitive and responsive dashboard.</p>
 
   <hr>
 
@@ -94,16 +84,6 @@ python manage.py createsuperuser</code></pre>
 
   <hr>
 
-  <h2>🔧 Environment Variables</h2>
-  <p>Create a <code>.env</code> file in the root directory with the following content:</p>
-  <pre><code>DEBUG=True
-SECRET_KEY=your_secret_key
-POSTGRES_DB=crm_db
-POSTGRES_USER=crm_user
-POSTGRES_PASSWORD=crm_pass</code></pre>
-
-  <hr>
-
   <h2>🤝 Contributing</h2>
   <p>Contributions are welcome! Follow these steps:</p>
   <ol>
@@ -127,6 +107,3 @@ POSTGRES_PASSWORD=crm_pass</code></pre>
   <p>Email: <a href="mailto:merzaqulov1@gmail.com">merzaqulov1@gmail.com</a></p>
   <p>LinkedIn: <a href="https://www.linkedin.com/in/muhammadjon-merzaqulov/" target="_blank">muhammadjon-merzaqulov</a></p>
   <p>GitHub: <a href="https://github.com/muhammadjon-merzaqulov" target="_blank">github.com/muhammadjon-merzaqulov</a></p>
-
-</body>
-</html>
