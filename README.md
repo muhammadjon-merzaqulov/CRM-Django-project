@@ -38,10 +38,8 @@ Deployed on AWS EC2 with Docker & GitHub Actions CI/CD pipeline.
 ├── requirements.txt   → Python dependencies
 └── README.md          → Project overview
 ```
-⚙️ Installation (Development)
-bash
-Copy
-Edit
+##⚙️ Installation (Development)
+
 # 1. Clone the repository
 git clone https://github.com/your-username/CRM-Django-project.git
 cd CRM-Django-project
