@@ -121,8 +121,10 @@ python manage.py createsuperuser</code></pre>
 
   <hr>
 
-  <h2>📜 License</h2>
-  <p>This project is licensed under the <strong>MIT License</strong>.</p>
+  ## 📜 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](./LICENSE) file for details.
 
   <hr>
 
