@@ -37,6 +37,7 @@ Deployed on AWS EC2 with Docker & GitHub Actions CI/CD pipeline.
 ├── docker-compose.yml→ Multi-container orchestration
 ├── requirements.txt   → Python dependencies
 └── README.md          → Project overview
+```
 ⚙️ Installation (Development)
 bash
 Copy
