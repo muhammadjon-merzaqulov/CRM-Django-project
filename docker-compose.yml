@@ -1,13 +1,27 @@
+version: '3.9'
+
 services:
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: crm_db
+      POSTGRES_USER: crm_user
+      POSTGRES_PASSWORD: crm_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   web:
     build: .
+    command: gunicorn crm_project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
     ports:
       - "8000:8000"
+    depends_on:
+      - db
 
 volumes:
-  static_volume:
-  media_volume:
+  postgres_data:
