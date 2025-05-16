@@ -38,41 +38,45 @@ Deployed on AWS EC2 with Docker & GitHub Actions CI/CD pipeline.
 ├── requirements.txt   → Python dependencies
 └── README.md          → Project overview
 ```
-## ⚙️ Installation (Development)
+# ⚙️ Installation (Development)
 
-# 1. Clone the repository
+## 1. Clone the repository
+```
 git clone https://github.com/your-username/CRM-Django-project.git
 cd CRM-Django-project
+```
 
-# 2. Create and activate virtual environment (optional)
+## 2. Create and activate virtual environment (optional)
+```
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-# 3. Install dependencies
+## 3. Install dependencies
+```
 pip install -r requirements.txt
+```
 
-# 4. Run migrations and create superuser
+## 4. Run migrations and create superuser
+```
 python manage.py migrate
 python manage.py createsuperuser
+```
 
-# 5. Run the development server
+## 5. Run the development server
+```
 python manage.py runserver
-🐳 Docker Setup (Production-Ready)
-bash
-Copy
-Edit
-# 1. Build and run the containers
+```
+
+#🐳 Docker Setup (Production-Ready)
+## 1. Build and run the containers
+```
 docker-compose up --build
+```
 
-# 2. Open in browser
+## 2. Open in browser
 http://localhost:8000
-🔐 Admin Access
-After creating a superuser, access the admin panel via:
 
-bash
-Copy
-Edit
-http://localhost:8000/admin
 ✅ Features
 🔐 Secure user authentication (registration, login, logout)
 
@@ -89,14 +93,12 @@ http://localhost:8000/admin
 🔧 Environment Variables
 Create a .env file and configure:
 
-env
-Copy
-Edit
 DEBUG=True
 SECRET_KEY=your_secret_key
 POSTGRES_DB=crm_db
 POSTGRES_USER=crm_user
 POSTGRES_PASSWORD=crm_pass
+
 🤝 Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
