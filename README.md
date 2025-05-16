@@ -37,7 +37,6 @@ docker-compose.yml   - Docker orchestration configuration
 requirements.txt     - Python project dependencies
 README.md            - Project documentation
   </pre>
-
   <hr>
 
   <h2>⚙️ Installation (Development)</h2>
@@ -68,7 +67,7 @@ python manage.py createsuperuser</code></pre>
   <pre><code>docker-compose up --build</code></pre>
 
   <h3>2. Open in Browser</h3>
-  <p><a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
+  <p><a href="http://43.204.150.89:8000/" target="_blank">🔗 CRM Django project/</a></p>
 
   <hr>
 
