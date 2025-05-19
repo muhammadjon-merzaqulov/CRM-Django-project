@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+            <div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">User Profile</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and profile information</p>
+            </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="px-4 py-5 sm:p-6">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-6">
+                    <h4 class="text-md font-medium text-gray-900">Account Information</h4>
+
+                    <div>
+                        <label for="{{ user_form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">Username</label>
+                        {{ user_form.username }}
+                        {% if user_form.username.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ user_form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ user_form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">Email</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ user_form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ user_form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">First Name</label>
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ user_form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ user_form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Last Name</label>
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ user_form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h4 class="text-md font-medium text-gray-900">Profile Information</h4>
+
+                    <div>
+                        <label for="{{ profile_form.bio.id_for_label }}" class="block text-sm font-medium text-gray-700">Bio</label>
+                        {{ profile_form.bio }}
+                        {% if profile_form.bio.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ profile_form.bio.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ profile_form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        {{ profile_form.phone_number }}
+                        {% if profile_form.phone_number.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ profile_form.phone_number.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ profile_form.position.id_for_label }}" class="block text-sm font-medium text-gray-700">Position</label>
+                        {{ profile_form.position }}
+                        {% if profile_form.position.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ profile_form.position.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Profile image section -->
+                    <div>
+                        <label for="{{ profile_form.profile_image.id_for_label }}" class="block text-sm font-medium text-gray-700">Profile Image</label>
+                        <div class="flex items-center space-x-4">
+                            {% if user.profile.profile_image and user.profile.profile_image.url %}
+                                <img src="{{ user.profile.profile_image.url }}"
+                                     alt="Profile Image"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                     class="h-20 w-20 rounded-full object-cover shadow">
+                            {% endif %}
+
+                            <!-- Harfli avatar fallback (yumaloq shaklda) -->
+                            <div class="w-20 aspect-square rounded-full bg-blue-600 text-white font-semibold text-2xl flex items-center justify-center shadow"
+                                 style="display: {% if user.profile.profile_image and user.profile.profile_image.url %}none{% else %}flex{% endif %};">
+                                {{ user.username|first|upper }}
+                            </div>
+
+                            <!-- File input -->
+                            {{ profile_form.profile_image }}
+                        </div>
+                        {% if profile_form.profile_image.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ profile_form.profile_image.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if contact %}{{ contact.first_name }} {{ contact.last_name }}{% else %}Create Contact{% endif %} - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">{% if contact %}Contact Details{% else %}Create New Contact{% endif %}</h1>
+        {% if contact %}
+        <div class="flex space-x-2">
+            <a href="{% url 'contact_update' contact.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-edit mr-2"></i> Edit
+            </a>
+            <a href="{% url 'contact_delete' contact.id %}" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-trash mr-2"></i> Delete
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Contact Info Card -->
+        <div class="md:col-span-2">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">First Name</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.first_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ form.last_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Phone</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.phone.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.company.id_for_label }}" class="block text-sm font-medium text-gray-700">Company</label>
+                        {{ form.company }}
+                        {% if form.company.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.company.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.position.id_for_label }}" class="block text-sm font-medium text-gray-700">Position</label>
+                        {{ form.position }}
+                        {% if form.position.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.position.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.address.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.notes.id_for_label }}" class="block text-sm font-medium text-gray-700">Notes</label>
+                        {{ form.notes }}
+                        {% if form.notes.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.notes.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-gray-700">Status</label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.status.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.source.id_for_label }}" class="block text-sm font-medium text-gray-700">Source</label>
+                        {{ form.source }}
+                        {% if form.source.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.source.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-6">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+                            {% if contact %}Update{% else %}Create{% endif %} Contact
+                        </button>
+                        <a href="{% url 'contact_list' %}" class="ml-2 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Additional Info Card -->
+        <div class="md:col-span-1">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Additional Information</h2>
+
+                {% if contact %}
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600">Created by</p>
+                    <p class="font-medium">{{ contact.created_by.username }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600">Created on</p>
+                    <p class="font-medium">{{ contact.created_at|date:"M d, Y" }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600">Last updated</p>
+                    <p class="font-medium">{{ contact.updated_at|date:"M d, Y" }}</p>
+                </div>
+                {% else %}
+                <p class="text-gray-600">Additional information will be available after creating the contact.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

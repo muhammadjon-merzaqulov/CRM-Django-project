@@ -1,0 +1,13 @@
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags == 'error' %}bg-red-100 text-red-700{% elif message.tags == 'success' %}bg-green-100 text-green-700{% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-700{% elif message.tags == 'info' %}bg-blue-100 text-blue-700{% endif %} px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline">{{ message }}</span>
+        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none'">
+            <span class="sr-only">Close</span>
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

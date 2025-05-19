@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Lead - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Delete Lead</h1>
+        <a href="{% url 'lead_detail' lead.id %}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Lead
+        </a>
+    </div>
+    
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Delete Lead</h3>
+                <p class="text-gray-500 mb-6">
+                    Are you sure you want to delete the lead "{{ lead.title }}"? This action cannot be undone.
+                </p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="flex justify-center space-x-4">
+                        <a href="{% url 'lead_detail' lead.id %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md">
+                            Cancel
+                        </a>
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md">
+                            Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

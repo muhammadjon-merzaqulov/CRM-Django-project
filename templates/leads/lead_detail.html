@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ lead.title }} - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Lead Details</h1>
+        <div class="flex space-x-2">
+            {% if lead.status != 'converted' %}
+                <a href="{% url 'lead_convert' lead.id %}" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md">
+                    <i class="fas fa-exchange-alt mr-2"></i> Convert to Deal
+                </a>
+            {% endif %}
+            <a href="{% url 'lead_update' lead.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-edit mr-2"></i> Edit
+            </a>
+            <a href="{% url 'lead_delete' lead.id %}" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">
+                <i class="fas fa-trash mr-2"></i> Delete
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Lead Info Card -->
+        <div class="md:col-span-1">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ lead.title }}</h2>
+
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Status:</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                {% if lead.status == 'new' %}bg-blue-100 text-blue-800
+                                {% elif lead.status == 'contacted' %}bg-yellow-100 text-yellow-800
+                                {% elif lead.status == 'qualified' %}bg-green-100 text-green-800
+                                {% elif lead.status == 'unqualified' %}bg-red-100 text-red-800
+                                {% elif lead.status == 'converted' %}bg-purple-100 text-purple-800
+                                {% endif %}">
+                                {{ lead.get_status_display }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Priority:</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                {% if lead.priority == 'high' %}bg-red-100 text-red-800
+                                {% elif lead.priority == 'medium' %}bg-yellow-100 text-yellow-800
+                                {% elif lead.priority == 'low' %}bg-green-100 text-green-800
+                                {% endif %}">
+                                {{ lead.get_priority_display }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Estimated Value:</span>
+                            <span class="font-medium">
+                                {% if lead.estimated_value %}
+                                    ${{ lead.estimated_value }}
+                                {% else %}
+                                    Not specified
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Assigned To:</span>
+                            <span class="font-medium">
+                                {% if lead.assigned_to %}
+                                    {{ lead.assigned_to.get_full_name|default:lead.assigned_to.username }}
+                                {% else %}
+                                    Unassigned
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Created By:</span>
+                            <span class="font-medium">{{ lead.created_by.get_full_name|default:lead.created_by.username }}</span>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-500">Created At:</span>
+                            <span class="font-medium">{{ lead.created_at|date:"M d, Y" }}</span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Last Updated:</span>
+                            <span class="font-medium">{{ lead.updated_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t pt-4 mt-4">
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">Contact Information</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="w-10 text-gray-500">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="flex-1">
+                                <a href="{% url 'contact_detail' lead.contact.id %}" class="text-blue-600 hover:underline">
+                                    {{ lead.contact.first_name }} {{ lead.contact.last_name }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center mb-2">
+                            <div class="w-10 text-gray-500">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="flex-1">
+                                <a href="mailto:{{ lead.contact.email }}" class="text-blue-600 hover:underline">
+                                    {{ lead.contact.email }}
+                                </a>
+                            </div>
+                        </div>
+
+                        {% if lead.contact.phone %}
+                            <div class="flex items-center mb-2">
+                                <div class="w-10 text-gray-500">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <a href="tel:{{ lead.contact.phone }}" class="text-blue-600 hover:underline">
+                                        {{ lead.contact.phone }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if lead.contact.company %}
+                            <div class="flex items-center">
+                                <div class="w-10 text-gray-500">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="flex-1">
+                                    {{ lead.contact.company }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Section -->
+        <div class="md:col-span-2">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="border-b">
+                    <nav class="flex" aria-label="Tabs">
+                        <button class="tab-btn active px-4 py-3 text-sm font-medium border-b-2 border-blue-500" data-tab="description">Description</button>
+                        <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-700" data-tab="tasks">Tasks</button>
+                        <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-700" data-tab="activity">Activity</button>
+                    </nav>
+                </div>
+
+                <!-- Description Tab -->
+                <div id="description-tab" class="tab-content p-6">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Lead Description</h3>
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        {% if lead.description %}
+                            <p class="text-gray-700 whitespace-pre-line">{{ lead.description }}</p>
+                        {% else %}
+                            <p class="text-gray-500 italic">No description provided.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Tasks Tab -->
+                <div id="tasks-tab" class="tab-content p-6 hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-800">Related Tasks</h3>
+                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+                            <i class="fas fa-plus mr-2"></i> Add Task
+                        </a>
+                    </div>
+
+                    <div class="border rounded-lg overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% if lead.tasks.all %}
+                                    {% for task in lead.tasks.all %}
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ task.title }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                    {% if task.status == 'not_started' %}bg-gray-100 text-gray-800
+                                                    {% elif task.status == 'in_progress' %}bg-blue-100 text-blue-800
+                                                    {% elif task.status == 'completed' %}bg-green-100 text-green-800
+                                                    {% elif task.status == 'deferred' %}bg-yellow-100 text-yellow-800
+                                                    {% endif %}">
+                                                    {{ task.get_status_display }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ task.due_date|date:"M d, Y H:i" }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ task.assigned_to.get_full_name|default:task.assigned_to.username }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No tasks found for this lead.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Activity Tab -->
+                <div id="activity-tab" class="tab-content p-6 hidden">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Activity Timeline</h3>
+                    <div class="flow-root">
+                        <ul class="-mb-8">
+                            <li>
+                                <div class="relative pb-8">
+                                    <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                    <div class="relative flex space-x-3">
+                                        <div>
+                                            <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                                                <i class="fas fa-plus text-white"></i>
+                                            </span>
+                                        </div>
+                                        <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                            <div>
+                                                <p class="text-sm text-gray-500">Lead created by <span class="font-medium text-gray-900">{{ lead.created_by.get_full_name|default:lead.created_by.username }}</span></p>
+                                            </div>
+                                            <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                                {{ lead.created_at|date:"M d, Y" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="relative pb-8">
+                                    <div class="relative flex space-x-3">
+                                        <div>
+                                            <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+                                                <i class="fas fa-edit text-white"></i>
+                                            </span>
+                                        </div>
+                                        <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                            <div>
+                                                <p class="text-sm text-gray-500">Lead last updated</p>
+                                            </div>
+                                            <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                                {{ lead.updated_at|date:"M d, Y" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            tabBtns.forEach(b => {
+                b.classList.remove('active', 'border-blue-500', 'text-blue-600');
+                b.classList.add('text-gray-500');
+            });
+
+            // Add active class to clicked button
+            btn.classList.add('active', 'border-blue-500', 'text-blue-600');
+            btn.classList.remove('text-gray-500');
+
+            // Hide all tab contents
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Show the selected tab content
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+        });
+    });
+</script>
+{% endblock %}

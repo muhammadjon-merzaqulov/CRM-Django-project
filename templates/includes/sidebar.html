@@ -1,0 +1,42 @@
+<aside class="w-64 bg-white shadow-md">
+    <div class="h-full px-3 py-4 overflow-y-auto">
+        <ul class="space-y-2">
+            <li>
+                <a href="{% url 'dashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if request.path == '/dashboard/' or request.path == '/' %}bg-gray-100{% endif %}">
+                    <i class="fas fa-tachometer-alt w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'contact_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if '/contacts/' in request.path %}bg-gray-100{% endif %}">
+                    <i class="fas fa-address-book w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Contacts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'lead_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if '/leads/' in request.path %}bg-gray-100{% endif %}">
+                    <i class="fas fa-user-tag w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Leads</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'deal_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if '/deals/' in request.path and '/kanban/' not in request.path %}bg-gray-100{% endif %}">
+                    <i class="fas fa-handshake w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Deals</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'task_list' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if '/tasks/' in request.path %}bg-gray-100{% endif %}">
+                    <i class="fas fa-tasks w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Tasks</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'profile' %}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 {% if '/accounts/profile/' in request.path %}bg-gray-100{% endif %}">
+                    <i class="fas fa-user-cog w-6 h-6 text-gray-500"></i>
+                    <span class="ml-3">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

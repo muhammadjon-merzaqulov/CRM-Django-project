@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ action }} Lead - CRM System{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">{{ action }} Lead</h1>
+        <a href="{% if lead %}{% url 'lead_detail' lead.id %}{% else %}{% url 'lead_list' %}{% endif %}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md">
+            <i class="fas fa-arrow-left mr-2"></i> Back
+        </a>
+    </div>
+    
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        {{ form.contact|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.title|as_crispy_field }}
+                    </div>
+                    <div class="md:col-span-2">
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.status|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.priority|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.estimated_value|as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.assigned_to|as_crispy_field }}
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+                        Save Lead
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

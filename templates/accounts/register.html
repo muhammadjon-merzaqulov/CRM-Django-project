@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - CRM System{% endblock %}
+
+{% block auth_content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg space-y-6">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900">Create an account</h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Already have one?
+                <a href="{% url 'login' %}" class="text-blue-600 hover:underline font-medium">Sign in</a>
+            </p>
+        </div>
+
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">First Name</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.first_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.last_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">Password</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="w-full py-2 px-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium text-sm shadow-md">
+                Create Account
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Remove password help texts if not already done in forms.py
+    document.addEventListener('DOMContentLoaded', () => {
+        const helpTexts = document.querySelectorAll('p.help');
+        helpTexts.forEach(p => p.remove());
+    });
+</script>
+{% endblock %}
