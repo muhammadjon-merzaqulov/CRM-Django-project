@@ -10,4 +10,6 @@ Pillow==10.1.0
 pyodbc==5.2.0
 pytz==2025.2
 sqlparse==0.5.3
+psycopg2-binary==2.9.10
+tzdata==2025.2
 psycopg2-binary
