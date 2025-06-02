@@ -21,6 +21,6 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd /home/ubuntu/CRM-Django-project
-            git pull origin main
+            git pull --no-rebase
             docker-compose down
             docker-compose up -d
