@@ -152,7 +152,7 @@ A 15 minute demo video showing:
 - Docker Compose execution
 - Working CRM system
 
-👉 **[Add your video link here]**
+👉 **[LINK](https://youtu.be/YScbEZchXQY)**
 
 ---
 
