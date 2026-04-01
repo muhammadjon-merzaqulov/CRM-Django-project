@@ -39,13 +39,13 @@ The goal of this assignment is to demonstrate:
   docker ps
   docker images
   ```
-- Monitored database logs:
+- Monitored logs:
   ```bash
-  docker logs postgres_db
+  docker logs ...
   ```
 - Accessed container shell:
   ```bash
-  docker exec -it postgres_db bash
+  docker exec -it ... bash
   ```
 
 ---
