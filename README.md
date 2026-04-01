@@ -105,26 +105,52 @@ System architecture:
 
 ## ⚙️ How to Run Locally
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/muhammadjon-merzaqulov/CRM-Django-project.git
 cd CRM-Django-project
 ```
 
-### 2. Build and start containers
+---
+
+### 2. Build and Start Containers
 
 ```bash
 docker-compose up --build
 ```
 
-### 3. Apply migrations
+---
+
+### 3. Database Setup & Migrations
+
+Open a new terminal window and run:
+
+#### A. Create migration files
+
+```bash
+docker-compose exec web python manage.py makemigrations
+```
+
+#### B. Apply migrations to PostgreSQL
 
 ```bash
 docker-compose exec web python manage.py migrate
 ```
 
-### 4. Open in browser
+---
+
+### 4. Create an Admin User (Superuser)
+
+To access the Django Admin panel:
+
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
+
+---
+
+### 5. Open in Browser
 
 ```
 http://localhost:8000
