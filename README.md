@@ -108,7 +108,7 @@ System architecture:
 ### 1. Clone the repository
 
 ```bash
-git clone [https://github.com/muhammadjon-uz/docker-assignment.git](https://github.com/muhammadjon-merzaqulov/CRM-Django-project.git)
+git clone https://github.com/muhammadjon-merzaqulov/CRM-Django-project.git
 cd CRM-Django-project
 ```
 
